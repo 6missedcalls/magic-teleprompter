@@ -1,86 +1,83 @@
-# Magic Teleprompter
+<p align="center">
+  <h1 align="center">Magic Teleprompter</h1>
+  <p align="center">
+    A native macOS teleprompter that floats over everything.<br>
+    Built with SwiftUI. Zero dependencies.
+  </p>
+</p>
 
-A lightweight, native macOS teleprompter built with SwiftUI. Runs as a floating overlay with sentence-by-sentence display, glass-effect controls, and zero external dependencies.
+<p align="center">
+  <img src=".github/demo.gif" alt="Magic Teleprompter demo" width="720">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-macOS_26+-black?logo=apple" alt="Platform">
+  <img src="https://img.shields.io/badge/swift-6.2-F05138?logo=swift&logoColor=white" alt="Swift">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License">
+  <img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies">
+</p>
+
+---
+
+## Get Started
+
+```bash
+swift build && swift run MagicTeleprompter
+```
+
+Or open `Package.swift` in Xcode and hit **Cmd+R**. No `.xcodeproj` needed.
+
+## Features
+
+| Feature | Details |
+|---|---|
+| **Sentence-by-sentence pacing** | Auto-advances based on word count and WPM setting |
+| **Always-on-top overlay** | Floats above all windows, lives in your menu bar |
+| **Hide from recordings** | Invisible to OBS, Screen Studio, and all macOS capture APIs |
+| **Mirror mode** | Horizontal flip for beam splitter / reflection setups |
+| **3-2-1 countdown** | Optional countdown before playback begins |
+| **Script editor** | Import/export `.txt`, autosave, live word count |
+| **Speed control** | 80 - 400 WPM with slider and keyboard shortcuts |
+| **Font sizing** | 20 - 72pt, adjustable on the fly |
+| **Glass UI** | Material backgrounds with frosted control bar |
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `Space` | Play / Pause |
+| `Right` / `Left` | Next / Previous sentence |
+| `Up` / `Down` | Increase / Decrease speed |
+| `Cmd +` / `Cmd -` | Increase / Decrease font size |
+| `M` | Toggle mirror mode |
+
+## Architecture
+
+```
+MagicTeleprompter/
+  MagicTeleprompterApp.swift   @main entry point
+  AppDelegate.swift            Window lifecycle, menu bar, screen capture hiding
+  Engine/
+    PlaybackEngine.swift       Playback state, timing, WPM, UserDefaults persistence
+  Models/
+    ScriptStore.swift          Script text, autosave, import/export
+  Views/
+    TeleprompterView.swift     Sentence display, controls, keyboard handling
+    SettingsView.swift         Settings sheet with toggles and script editor
+```
+
+**Design decisions:**
+
+- **Pure SwiftUI + AppKit** — no external dependencies, no CocoaPods, no SPM packages
+- **`NSWindow.sharingType = .none`** — uses the macOS capture exclusion API to hide from screen recording software
+- **Sentence pacing** — display duration = `wordCount / WPM * 60` with a 1.2s minimum floor
+- **Reactive persistence** — `@Published` properties with `didSet` writing to `UserDefaults`
 
 ## Requirements
 
 - macOS 26+
 - Xcode 26+ / Swift 6.2+
 
-## Build & Run
-
-```bash
-# Build
-swift build
-
-# Run
-swift run MagicTeleprompter
-
-# Test
-swift test
-```
-
-Or open `Package.swift` in Xcode and press **Cmd+R**.
-
-## Features
-
-- **Sentence-by-sentence display** with automatic pacing based on word count and WPM
-- **Floating overlay** window that stays on top of all apps
-- **Menu bar app** with status item toggle (no Dock icon)
-- **Mirror mode** for beam splitter setups
-- **Hide from recordings** toggle to exclude the window from OBS, Screen Studio, and all macOS screen capture APIs
-- **Optional 3-2-1 countdown** before playback begins
-- **Script editor** with import/export (.txt), autosave, and live word count
-- **Adjustable speed** (80-400 WPM) and **font size** (20-72pt)
-- **Glass-effect UI** with material backgrounds and frosted controls
-
-## Keyboard Shortcuts
-
-| Shortcut | Action |
-|---|---|
-| Space | Play / Pause |
-| Right Arrow | Next sentence |
-| Left Arrow | Previous sentence |
-| Up Arrow | Increase speed |
-| Down Arrow | Decrease speed |
-| Cmd + `+` | Increase font size |
-| Cmd + `-` | Decrease font size |
-| M | Toggle mirror mode |
-
-## Architecture
-
-```
-MagicTeleprompter/
-  MagicTeleprompterApp.swift   # App entry point (@main)
-  AppDelegate.swift            # Window management, status item, screen capture hiding
-  Models/
-    ScriptStore.swift          # Script text persistence, import/export
-  Engine/
-    PlaybackEngine.swift       # Playback state, timing, speed, settings (UserDefaults)
-  Views/
-    TeleprompterView.swift     # Main display, controls, keyboard handling
-    SettingsView.swift         # Settings sheet with toggles and script editor
-```
-
-### Design Decisions
-
-- **No external dependencies** — pure SwiftUI + AppKit bridging only where needed
-- **`ObservableObject` + `@Published`** — reactive state with UserDefaults persistence via `didSet`
-- **`NSWindow.sharingType = .none`** — excludes the window from `CGWindowListCreateImage` and `SCStream` capture APIs when hide-from-recordings is enabled
-- **Sentence-based pacing** — display duration scales with word count (`words / WPM * 60`), with a 1.2s minimum floor
-- **App Sandbox disabled** — required for floating window level (`.floating`) and `sharingType` control
-
-## Settings Persistence
-
-All preferences are saved to UserDefaults and restored on launch:
-
-- Speed (WPM)
-- Font size
-- Mirror mode
-- Countdown toggle
-- Hide from recordings
-- Script text
-
 ## License
 
-MIT
+[MIT](LICENSE)
