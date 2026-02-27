@@ -7,10 +7,6 @@
 </p>
 
 <p align="center">
-  <img src=".github/demo.gif" alt="Magic Teleprompter demo" width="720">
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/badge/platform-macOS_26+-black?logo=apple" alt="Platform">
   <img src="https://img.shields.io/badge/swift-6.2-F05138?logo=swift&logoColor=white" alt="Swift">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="License">
@@ -18,6 +14,16 @@
 </p>
 
 ---
+
+## Demo
+
+<details>
+<summary>See it in action</summary>
+<br>
+<p align="center">
+  <img src=".github/demo.gif" alt="Magic Teleprompter demo" width="720">
+</p>
+</details>
 
 ## Get Started
 
