@@ -1,0 +1,17 @@
+# Build artifacts
+.build/
+DerivedData/
+
+# Xcode — contributors generate their own via `open Package.swift`
+*.xcodeproj
+*.xcworkspace
+
+# Xcode user-specific data
+xcuserdata/
+*.xcuserstate
+
+# SwiftPM user data
+.swiftpm/
+
+# macOS metadata
+.DS_Store
